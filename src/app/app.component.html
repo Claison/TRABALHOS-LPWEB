@@ -18,9 +18,9 @@
         <li *ngFor="let tipo of tipos">
             Tipo: {{tipo.nome}} : {{porcentagens[tipo.id]}} %
         </li>
-        <li>Total abril: {{cont_abril}}</li>
-        <li>Total março: {{cont_marco}}</li>
-        <li>Relação abril-março: {{relacao_ocorrencias}} %</li>
+        <li>Total abril: {{cont_abril}}  /  Total março: {{cont_marco}}</li> 
+        
+        <li [class.positivo]="relacao_ocorrencias < 0" [class.negativo]="relacao_ocorrencias >= 0">Relação abril-março: {{relacao_ocorrencias}} %</li>
     </div>
     <div *ngIf="lista != false">
         <table class="table">
@@ -75,7 +75,6 @@
                 <textarea id="observacao" name="observacao" [(ngModel)]="observacao"cols="70" rows="5" class="form-control"></textarea>
             </div>
             <button type="submit" class="btn btn-outline-success" [disabled]="!cadastro.valid" >Salvar</button>
-            <!-- <button type="reset" (click)="limpar()">Limpar</button> -->
         </form>
     </div>
     <div *ngIf="cont_ocorrencia != false">
@@ -84,7 +83,7 @@
         <label for="data">Data Final</label><br>
         <input type="Date" id="dataF" name="dataF" class="form-control" [(ngModel)]="dataF" required>
         <button (click)="buscar()" type="button" class="btn btn-outline-primary">Buscar</button>
-        <li> Total de Ocorrencia:  {{total_ocorrencia}}</li>
+        <li> Total de Ocorrencias:  {{total_ocorrencia}}</li>
             
     </div>
 </div>

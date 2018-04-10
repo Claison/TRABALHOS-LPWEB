@@ -36,12 +36,12 @@ export class AppComponent {
   total_ocorrencia=null;
 
   ocorrencias = [ 
-    /* new Ocorrencia(1,'Claison',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-04-25"),
+    new Ocorrencia(1,'Claison',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-04-25"),
     new Ocorrencia(2,'Heitor',new Tipo(2, 'baixo índice de rendimento'),"2018-03-26"),
     new Ocorrencia(3,'Dyonnes',new Tipo(1, 'comportamento inadequado com colegas'),"2018-03-02"),
     new Ocorrencia(4,'Patricia',new Tipo(1, 'comportamento inadequado com colegas'),"2018-04-09"),
     new Ocorrencia(5,'Cesár',new Tipo(0, 'indisciplina em sala de aula'),"2018-04-10"),
-    new Ocorrencia(6,'Jorge',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-03-27") */
+    new Ocorrencia(6,'Jorge',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-03-27")
   ];
   tipos = [
     new Tipo(0, 'indisciplina em sala de aula'),
