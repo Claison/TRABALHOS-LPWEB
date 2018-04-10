@@ -1,34 +1,52 @@
 <div class="container">
     <div class="row">
-      <div class="col">
-        <h1>Atividades de Ensino </h1>
-      </div>
-      
-     </div>
+        <div class="col">
+            <h1>Atividades de Ensino </h1>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button (click)="exibir_lista()" type="button" class="btn btn-outline-primary">Ocorrencias</button>
+            <button (click)="exibir_cadastro()" type="button" class="btn btn-outline-success">Cadastra Ocorrencia</button>
+            <button (click)="exibir_ocorrencia()"type="button" class="btn btn-outline-info">Pesquisar Ocorrencias</button>
+            <button (click)="atualizarEstatisticas()"type="button" class="btn btn-outline-warning">Atualizar</button>
+        </div>
+    </div>
+    <div *ngIf="salvar_ok" class="alert alert-success">
+        A ocorrencia foi cadastrada com sucesso
+    </div>
+    <h2>Estatísticas</h2>
+    <div>
+        <li *ngFor="let tipo of tipos">
+            Tipo: {{tipo.nome}} : {{porcentagens[tipo.id]}} %
+        </li>
+        <li>Total abril: {{cont_abril}}</li>
+        <li>Total março: {{cont_marco}}</li>
+        <li>Relação abril-março: {{relacao_ocorrencias}} %</li>
+    </div>
+    <div *ngIf="lista != false">
         <table class="table">
             <thead class="thead-dark">
-            <tr>
-                <th>Data</th> 
-                <th>Matricula</th>
-                <th>Nome</th>
-                <th>Tipo ocorrência</th>
-              </tr>
+                <tr>
+                    <th>Data</th> 
+                    <th>Matricula</th>
+                    <th>Nome</th>
+                    <th>Tipo ocorrência</th>
+                </tr>
             
-            <tr *ngFor="let ocorrencia of ocorrencias"> 
-                <td >{{ocorrencia.data}}</td>
-                <td>{{ocorrencia.matricula}}</td>
-                <td>{{ocorrencia.nome}}</td>
-                <td>{{ocorrencia.tipo}}</td> 
-            </tr>
+                <tr *ngFor="let ocorrencia of ocorrencias"> 
+                    <td >{{ocorrencia.data}}</td>
+                    <td>{{ocorrencia.matricula}}</td>
+                    <td>{{ocorrencia.nome}}</td>
+                    <td>{{ocorrencia.tipo.nome}}</td> 
+                </tr>
             </thead>
         </table>
-        <div *ngIf="salvar_ok" class="alert alert-success">
-            <strong>Sucesso!</strong> A ocorrencia foi cadastrada com sucesso
-      </div>
+    </div>
+    <div *ngIf="cadastro != false">
+        
         <form #cadastro="ngForm" (submit)="salvar()"  >
             <div>
                 <label for="matricula">Matricula</label><br>
-                <input type="number" id="matricula" name="matricula" [(ngModel)]="matricula" class="form-control" required>
+                <input type="number" id="matricula" name="matricula" (change)="buscaAluno()" [(ngModel)]="matricula" class="form-control" required>
             </div>
             <div>
                 <label for="nome">Nome</label><br>
@@ -41,29 +59,33 @@
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" name="ativa" [(ngModel)]="ativa">
                 <label class="form-check-label">Responsavel</label><br>
-                
             </div>
             <div *ngIf="ativa">
                 <label for="nome">Responsavel</label><br>
                 <input type="text" id="nomePai" name="nomePai" [(ngModel)]="nomePai"  class="form-control" >
             </div>
-            <div class="form-group">
-                  <label for="periodo">Selecione o Tipo de Ocorrência:</label>
-                  <select type="text" class="form-control" id="tipo" name="tipo" [(ngModel)]="tipo" required>
-                    <option value="">selecione um tipo</option>
-                    <option value="indisciplina em sala de aula">indisciplina em sala de aula</option>
-                    <option value="comportamento inadequado com colegas">comportamento inadequado com colegas</option>
-                    <option value="baixo indice de rendimento">baixo indice de rendimento</option>
-                    <option value="indicação de atenção por assunto familíar, psicológico ou social">indicação de atenção por assunto familíar, psicológico ou social</option>
-                  </select>
-                </div>
+            <div>
+                <label for="tipo">Selecione o Tipo de Ocorrência:</label>
+                    <select id="tipo" name="tipo" [(ngModel)]="tipo" required>
+                        <option *ngFor="let t of tipos" [value]="t.id" >{{t.nome}}</option>
+                    </select>
+            </div>
             <div>
                 <label for="observacao">Descrição</label><br>
                 <textarea id="observacao" name="observacao" [(ngModel)]="observacao"cols="70" rows="5" class="form-control"></textarea>
             </div>
-            
-           
             <button type="submit" class="btn btn-outline-success" [disabled]="!cadastro.valid" >Salvar</button>
+            <!-- <button type="reset" (click)="limpar()">Limpar</button> -->
+        </form>
+    </div>
+    <div *ngIf="cont_ocorrencia != false">
+        <label for="data">Data Inicial</label><br>
+        <input type="Date" id="dataI" name="dataI" class="form-control" [(ngModel)]="dataI" required>
+        <label for="data">Data Final</label><br>
+        <input type="Date" id="dataF" name="dataF" class="form-control" [(ngModel)]="dataF" required>
+        <button (click)="buscar()" type="button" class="btn btn-outline-primary">Buscar</button>
+        <li> Total de Ocorrencia:  {{total_ocorrencia}}</li>
             
-          </form>
-    </div>   
+    </div>
+</div>
+{{total_ocorrencia}}

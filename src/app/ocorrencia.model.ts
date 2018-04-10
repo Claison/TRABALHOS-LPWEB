@@ -1,13 +1,15 @@
+import { Tipo } from "./tipo.model";
+
 export class Ocorrencia {
   matricula:number
   nome: string;
   observacao: string;
-  tipo:string;
-  data:Date;
+  tipo:Tipo;
+  data:string;
   pais:boolean;
   nomePai:string;
 
-  constructor(matricula:number, nome:string,tipo:string, data?:Date,pais?:boolean,nomePai?:string, observacao?: string,) {
+  constructor(matricula:number, nome:string,tipo:Tipo, data?:string,pais?:boolean,nomePai?:string, observacao?: string,) {
     this.matricula=matricula
     this.nome = nome;
     this.observacao = observacao;
