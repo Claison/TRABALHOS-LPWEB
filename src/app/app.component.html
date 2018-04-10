@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Atividades de Ensino </h1>
+      </div>
+      
+     </div>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Data</th> 
+                <th>Matricula</th>
+                <th>Nome</th>
+                <th>Tipo ocorrência</th>
+              </tr>
+            
+            <tr *ngFor="let ocorrencia of ocorrencias"> 
+                <td >{{ocorrencia.data}}</td>
+                <td>{{ocorrencia.matricula}}</td>
+                <td>{{ocorrencia.nome}}</td>
+                <td>{{ocorrencia.tipo}}</td> 
+            </tr>
+            </thead>
+        </table>
+        <div *ngIf="salvar_ok" class="alert alert-success">
+            <strong>Sucesso!</strong> A ocorrencia foi cadastrada com sucesso
+      </div>
+        <form #cadastro="ngForm" (submit)="salvar()"  >
+            <div>
+                <label for="matricula">Matricula</label><br>
+                <input type="number" id="matricula" name="matricula" [(ngModel)]="matricula" class="form-control" required>
+            </div>
+            <div>
+                <label for="nome">Nome</label><br>
+                <input type="text" id="nome" name="nome" [(ngModel)]="nome"  class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="data">Data</label><br>
+                <input type="Date" id="data" name="data" class="form-control" [(ngModel)]="data" required>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="ativa" [(ngModel)]="ativa">
+                <label class="form-check-label">Responsavel</label><br>
+                
+            </div>
+            <div *ngIf="ativa">
+                <label for="nome">Responsavel</label><br>
+                <input type="text" id="nomePai" name="nomePai" [(ngModel)]="nomePai"  class="form-control" >
+            </div>
+            <div class="form-group">
+                  <label for="periodo">Selecione o Tipo de Ocorrência:</label>
+                  <select type="text" class="form-control" id="tipo" name="tipo" [(ngModel)]="tipo" required>
+                    <option value="">selecione um tipo</option>
+                    <option value="indisciplina em sala de aula">indisciplina em sala de aula</option>
+                    <option value="comportamento inadequado com colegas">comportamento inadequado com colegas</option>
+                    <option value="baixo indice de rendimento">baixo indice de rendimento</option>
+                    <option value="indicação de atenção por assunto familíar, psicológico ou social">indicação de atenção por assunto familíar, psicológico ou social</option>
+                  </select>
+                </div>
+            <div>
+                <label for="observacao">Descrição</label><br>
+                <textarea id="observacao" name="observacao" [(ngModel)]="observacao"cols="70" rows="5" class="form-control"></textarea>
+            </div>
+            
+           
+            <button type="submit" class="btn btn-outline-success" [disabled]="!cadastro.valid" >Salvar</button>
+            
+          </form>
+    </div>   
