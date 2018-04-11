@@ -1,17 +1,6 @@
 import {Component} from '@angular/core';
 import {Evento} from './evento.model';
 
-
-/* Utilizando Angular, desenvolva um aplicativo web que permita ao usuário
-cadastrar eventos favoritos. Especificamente, as funcionalidades e requisitos são:
-
-Listar eventos cadastrados (mostrar: sigla, nome, data de início do evento,
-data de término do evento, prazo para submissão de artigos)
-Cadastrar evento (campos: sigla, nome, data de início do evento, 
-data de término do evento, prazo para submissão de artigos, URL do site do evento)
-Editar evento
-Excluir evento */
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,7 +9,7 @@ Excluir evento */
 export class AppComponent {
   // Mostrar div
   cadastro=false;
-  lista_evento= null;
+  lista_evento= true;
   // Atributos de evento
   sigla = null;
   nome = null;
@@ -32,9 +21,7 @@ export class AppComponent {
   editar = null;
 
   salvar_ok=false;
-  ativa=false;
 
-  
   eventos = [ 
     new Evento("EI",'Encoinfo',"2018-03-26","2018-04-25","2018-03-26","www.google.com.br"),
     new Evento("EI",'Encoinfo',"2018-03-26","2018-04-25","2018-03-26","www.google.com.br"),
@@ -44,21 +31,24 @@ export class AppComponent {
   
   ];
       
-  
   exibir_cadastro(){
-    this.salvar_ok=false;
+    this.lista_evento=false;
+    
     if(this.cadastro == true){
       this.cadastro = false;
+      this.lista_evento=true;
     }
     else{
       this.cadastro = true;
+      
     }
   }
 
   exibir_evento(){
-    this.salvar_ok=false;
-    if(this.lista_evento == true){
+    this.cadastro = false; 
+   if(this.lista_evento == true){
       this.lista_evento = false;
+      this.cadastro = true;
     }
     else{
       this.lista_evento = true;
@@ -76,20 +66,24 @@ export class AppComponent {
     }
     else {
     const d = new Evento(this.sigla, this.nome,this.dataI, this.dataF,this.prazo, this.url);
-    this.eventos.push(d); 
-    this.cancelar();   
+    this.eventos.push(d);   
     }
+    this.cancelar();
   }
   cancelar() {
+    this.exibir_evento();
     this.sigla=null;
     this.nome = null;
-    this.dataI=false;
-    this.dataF=false;
+    this.dataI=null;
+    this.dataF=null;
     this.prazo = null;
     this.url=null;
+    this.editar = null;
     }
-
+  
     editor(evento) {
+      this.lista_evento=false;
+      this.cadastro=true;
       this.sigla = evento.sigla;
       this.nome = evento.nome;
       this.dataI = evento.dataI;

@@ -4,19 +4,19 @@
             <h1>EVENTOS CIENTÍFICOS </h1>
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button (click)="exibir_lista()" type="button" class="btn btn-outline-primary">Ocorrencias</button>
-            <button (click)="exibir_cadastro()" type="button" class="btn btn-outline-success">Cadastra Ocorrencia</button>
-            <button (click)="exibir_ocorrencia()"type="button" class="btn btn-outline-info">Pesquisar Ocorrencias</button>
-            <button (click)="atualizarEstatisticas()"type="button" class="btn btn-outline-warning">Atualizar</button>
+            <button (click)="exibir_cadastro()" type="button" class="btn btn-outline-primary">Cadastrar Evento</button>
         </div>
     </div>
-    <table>
+    <div *ngIf = "lista_evento != false">
+    <table class="table">
+        <thead  class="thead-dark">
         <tr>
             <th>Siglas</th> 
             <th>Nomes</th>
             <th>Data do Inicio</th>
             <th>Data do Encerramento</th>
-            <th>Prazo para oublicação</th>
+            <th>Prazo para submissão de Artigo</th>
+            <th>Funções do Sistema</th>
           </tr>
         <tr *ngFor="let evento of eventos"> 
             <td >{{evento.sigla}}</td>
@@ -24,53 +24,45 @@
             <td>{{evento.dataI}}</td>
             <td>{{evento.dataF}}</td> 
             <td>{{evento.prazo}}</td>
-            <td><button class="btn btn-primary"(click)="editor(disciplina)">Editar</button>   <button class="btn btn-danger" (click)="excluir(disciplina)">Excluir</button></td>
+            <td><button class="btn btn-primary"(click)="editor(evento)">Editar</button>   
+                <button class="btn btn-danger" (click)="excluir(evento)">Excluir</button></td>
           </tr>
+        </thead>
     </table>
     </div>
-    <div *ngIf="cadastro != false">
-        
+    </div>
+    <div class="container" *ngIf="cadastro != false">
+        <div class="col-xs-4">
         <form #cadastro="ngForm" (submit)="salvar()"  >
             <div>
-                <label for="matricula">Matricula</label><br>
-                <input type="number" id="matricula" name="matricula" (change)="buscaAluno()" [(ngModel)]="matricula" class="form-control" required>
+                <label for="sigla">Sigla do Evento</label><br>
+                <input type="text" id="sigla" name="sigla" [(ngModel)]="sigla" class="form-control" >
             </div>
             <div>
-                <label for="nome">Nome</label><br>
-                <input type="text" id="nome" name="nome" [(ngModel)]="nome"  class="form-control">
+                <label for="nome">Nome do Evento</label><br>
+                <input type="text" id="nome" name="nome" [(ngModel)]="nome"  class="form-control"><br>
+            </div>
+            <div class="form-inline" >
+            <div class="form-group">
+                <label for="dataI">&ensp;Data inicial do Evento: </label>
+                <input type="Date" id="dataI" name="dataI" class="form-control" [(ngModel)]="dataI" >
             </div>
             <div class="form-group">
-                <label for="data">Data</label><br>
-                <input type="Date" id="data" name="data" class="form-control" [(ngModel)]="data" required>
+                <label for="dataF">&ensp;Data final do Evento:</label>
+                <input type="Date" id="dataF" name="dataF" class="form-control" [(ngModel)]="dataF" >
             </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="ativa" [(ngModel)]="ativa">
-                <label class="form-check-label">Responsavel</label><br>
+            <div class="form-group">
+                <label for="prazo">&ensp;Data para submissão:</label>
+                <input type="Date" id="prazo" name="prazo" class="form-control" [(ngModel)]="prazo" >
             </div>
-            <div *ngIf="ativa">
-                <label for="nome">Responsavel</label><br>
-                <input type="text" id="nomePai" name="nomePai" [(ngModel)]="nomePai"  class="form-control" >
-            </div>
+        </div>
             <div>
-                <label for="tipo">Selecione o Tipo de Ocorrência:</label>
-                    <select id="tipo" name="tipo" [(ngModel)]="tipo" required>
-                        <option *ngFor="let t of tipos" [value]="t.id" >{{t.nome}}</option>
-                    </select>
-            </div>
-            <div>
-                <label for="observacao">Descrição</label><br>
-                <textarea id="observacao" name="observacao" [(ngModel)]="observacao"cols="70" rows="5" class="form-control"></textarea>
+                <label for="url">URL</label><br>
+                <input type="text" id="url" name="url" [(ngModel)]="url"  class="form-control"><br>
             </div>
             <button type="submit" class="btn btn-outline-success" [disabled]="!cadastro.valid" >Salvar</button>
+            <button type ="reset" class ="btn btn-outline-danger" (clique)="cancelar()"> Cancelar </button>
+            <button type ="button" class ="btn btn-outline-danger" (clique)="exibir_evento()"> Voltar </button>
         </form>
-    </div>
-    <div *ngIf="cont_ocorrencia != false">
-        <label for="data">Data Inicial</label><br>
-        <input type="Date" id="dataI" name="dataI" class="form-control" [(ngModel)]="dataI" required>
-        <label for="data">Data Final</label><br>
-        <input type="Date" id="dataF" name="dataF" class="form-control" [(ngModel)]="dataF" required>
-        <button (click)="buscar()" type="button" class="btn btn-outline-primary">Buscar</button>
-        <li> Total de Ocorrencias:  {{total_ocorrencia}}</li>
-            
     </div>
 </div>
