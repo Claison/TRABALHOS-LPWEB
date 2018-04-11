@@ -35,14 +35,13 @@ export class AppComponent {
   dataF=null;
   total_ocorrencia=null;
 
-  /*
   ocorrencias = [ 
-     new Ocorrencia(1,'Claison',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-04-25"),
+    new Ocorrencia(1,'Claison',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-04-25"),
     new Ocorrencia(2,'Heitor',new Tipo(2, 'baixo índice de rendimento'),"2018-03-26"),
     new Ocorrencia(3,'Dyonnes',new Tipo(1, 'comportamento inadequado com colegas'),"2018-03-02"),
     new Ocorrencia(4,'Patricia',new Tipo(1, 'comportamento inadequado com colegas'),"2018-04-09"),
     new Ocorrencia(5,'Cesár',new Tipo(0, 'indisciplina em sala de aula'),"2018-04-10"),
-    new Ocorrencia(6,'Jorge',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-03-27") 
+    new Ocorrencia(6,'Jorge',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-03-27")
   ];
   tipos = [
     new Tipo(0, 'indisciplina em sala de aula'),
@@ -56,55 +55,7 @@ export class AppComponent {
     new Aluno(3, 'César'),
     new Aluno(4, 'Patricia'),
     new Aluno(5, 'Laura'),
-  ]*/
-  tipos = this.carregarTipos();
-  alunos = this.carregarAlunos();
-  ocorrencias = this.carregarOcorrencias();
-
-  carregarOcorrencias(){
-    var ocorrencias = JSON.parse(localStorage.getItem("ocorrencias"));
-    if(ocorrencias == null){
-      ocorrencias = [ 
-        new Ocorrencia(1,'Claison',this.tipos[0],"2018-04-25"),
-        new Ocorrencia(2,'Heitor',this.tipos[1],"2018-03-26"),
-        new Ocorrencia(3,'Dyonnes',this.tipos[1],"2018-03-02"),
-        new Ocorrencia(4,'Patricia',this.tipos[2],"2018-04-09"),
-        new Ocorrencia(5,'Cesár',this.tipos[3],"2018-04-10"),
-        new Ocorrencia(6,'Jorge',this.tipos[2],"2018-03-27") 
-      ];
-      localStorage.setItem("ocorrencias",JSON.stringify(ocorrencias));
-    }
-    return ocorrencias;
-  }
-  carregarTipos(){
-    var tipos = JSON.parse(localStorage.getItem("tipos"));
-    if(tipos == null){
-      tipos = [
-        new Tipo(0, 'indisciplina em sala de aula'),
-        new Tipo(1, 'comportamento inadequado com colegas'),
-        new Tipo(2, 'baixo índice de rendimento'),
-        new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social')
-      ];  
-      localStorage.setItem("tipos",JSON.stringify(tipos));
-    }
-    return tipos;
-  }
-
-  carregarAlunos(){
-    var alunos = JSON.parse(localStorage.getItem("alunos"));
-    if(alunos == null){
-      alunos = [
-        new Aluno(1, 'Claison'),
-        new Aluno(2, 'jorge'),
-        new Aluno(3, 'César'),
-        new Aluno(4, 'Patricia'),
-        new Aluno(5, 'Laura'),
-      ];  
-      localStorage.setItem("alunos",JSON.stringify(alunos));
-    }
-    return alunos;
-  }
-
+  ]
   exibir_lista(){
     this.salvar_ok=false;
     if(this.lista == true){
@@ -140,7 +91,6 @@ export class AppComponent {
     const t= this.tipos[this.tipo];
     const d = new Ocorrencia(this.matricula, this.nome,t, this.data,this.pais,this.nomePai, this.observacao,);
     this.ocorrencias.push(d); 
-    localStorage.setItem("ocorrencias",JSON.stringify(this.ocorrencias));
     this.salvar_ok=true;
     this.limpar();
     this.atualizarEstatisticas();
