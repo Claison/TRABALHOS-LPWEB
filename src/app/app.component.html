@@ -61,8 +61,7 @@
                 <input type="text" id="url" name="url" [(ngModel)]="url"  class="form-control"><br>
             </div>
             <button type="submit" class="btn btn-outline-success" [disabled]="!cadastro.valid" >Salvar</button>
-            <button type ="reset" class ="btn btn-outline-danger" (clique)="cancelar()"> Cancelar </button>
-            <button type ="button" class ="btn btn-outline-danger" (clique)="exibir_evento()"> Voltar </button>
+            <button type ="reset" class ="btn btn-outline-danger" (click)="cancelar()"> Cancelar </button>
         </form>
     </div>
 </div>
