@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Atividades de Ensino </h1>
+            <h1>EVENTOS CIENTÍFICOS </h1>
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
             <button (click)="exibir_lista()" type="button" class="btn btn-outline-primary">Ocorrencias</button>
@@ -10,36 +10,23 @@
             <button (click)="atualizarEstatisticas()"type="button" class="btn btn-outline-warning">Atualizar</button>
         </div>
     </div>
-    <div *ngIf="salvar_ok" class="alert alert-success">
-        A ocorrencia foi cadastrada com sucesso
-    </div>
-    <h2>Estatísticas</h2>
-    <div>
-        <li *ngFor="let tipo of tipos">
-            Tipo: {{tipo.nome}} : {{porcentagens[tipo.id]}} %
-        </li>
-        <li>Total abril: {{cont_abril}}  /  Total março: {{cont_marco}}</li> 
-        
-        <li [class.positivo]="relacao_ocorrencias < 0" [class.negativo]="relacao_ocorrencias >= 0">Relação abril-março: {{relacao_ocorrencias}} %</li>
-    </div>
-    <div *ngIf="lista != false">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Data</th> 
-                    <th>Matricula</th>
-                    <th>Nome</th>
-                    <th>Tipo ocorrência</th>
-                </tr>
-            
-                <tr *ngFor="let ocorrencia of ocorrencias"> 
-                    <td >{{ocorrencia.data}}</td>
-                    <td>{{ocorrencia.matricula}}</td>
-                    <td>{{ocorrencia.nome}}</td>
-                    <td>{{ocorrencia.tipo.nome}}</td> 
-                </tr>
-            </thead>
-        </table>
+    <table>
+        <tr>
+            <th>Siglas</th> 
+            <th>Nomes</th>
+            <th>Data do Inicio</th>
+            <th>Data do Encerramento</th>
+            <th>Prazo para oublicação</th>
+          </tr>
+        <tr *ngFor="let evento of eventos"> 
+            <td >{{evento.sigla}}</td>
+            <td>{{evento.nome}}</td>
+            <td>{{evento.dataI}}</td>
+            <td>{{evento.dataF}}</td> 
+            <td>{{evento.prazo}}</td>
+            <td><button class="btn btn-primary"(click)="editor(disciplina)">Editar</button>   <button class="btn btn-danger" (click)="excluir(disciplina)">Excluir</button></td>
+          </tr>
+    </table>
     </div>
     <div *ngIf="cadastro != false">
         
@@ -87,4 +74,3 @@
             
     </div>
 </div>
-{{total_ocorrencia}}

@@ -1,7 +1,16 @@
 import {Component} from '@angular/core';
-import {Ocorrencia} from './ocorrencia.model';
-import {Aluno} from './aluno.model';
-import {Tipo} from './tipo.model';
+import {Evento} from './evento.model';
+
+
+/* Utilizando Angular, desenvolva um aplicativo web que permita ao usuário
+cadastrar eventos favoritos. Especificamente, as funcionalidades e requisitos são:
+
+Listar eventos cadastrados (mostrar: sigla, nome, data de início do evento,
+data de término do evento, prazo para submissão de artigos)
+Cadastrar evento (campos: sigla, nome, data de início do evento, 
+data de término do evento, prazo para submissão de artigos, URL do site do evento)
+Editar evento
+Excluir evento */
 
 @Component({
   selector: 'app-root',
@@ -9,112 +18,33 @@ import {Tipo} from './tipo.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  entrar=false;
-  matricula= null;
-  nome = null;
-  observacao = null;
-  nomePai=null;
-  tipo=null;
-  data=null;
-  pais=false;
-  salvar_ok=false;
-  ativa=false;
-  
-
-  lista=false;
+  // Mostrar div
   cadastro=false;
-  cont_ocorrencia=false;
-
-  contadores = [0, 0, 0, 0];
-  porcentagens = [0, 0, 0, 0];
-  cont_abril = 0;
-  cont_marco = 0;
-  relacao_ocorrencias = 0;
-
+  lista_evento= null;
+  // Atributos de evento
+  sigla = null;
+  nome = null;
   dataI=null;
   dataF=null;
-  total_ocorrencia=null;
+  prazo=null;
+  url=null;
 
-  /*
-  ocorrencias = [ 
-     new Ocorrencia(1,'Claison',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-04-25"),
-    new Ocorrencia(2,'Heitor',new Tipo(2, 'baixo índice de rendimento'),"2018-03-26"),
-    new Ocorrencia(3,'Dyonnes',new Tipo(1, 'comportamento inadequado com colegas'),"2018-03-02"),
-    new Ocorrencia(4,'Patricia',new Tipo(1, 'comportamento inadequado com colegas'),"2018-04-09"),
-    new Ocorrencia(5,'Cesár',new Tipo(0, 'indisciplina em sala de aula'),"2018-04-10"),
-    new Ocorrencia(6,'Jorge',new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social'),"2018-03-27") 
+  editar = null;
+
+  salvar_ok=false;
+  ativa=false;
+
+  
+  eventos = [ 
+    new Evento("EI",'Encoinfo',"2018-03-26","2018-04-25","2018-03-26","www.google.com.br"),
+    new Evento("EI",'Encoinfo',"2018-03-26","2018-04-25","2018-03-26","www.google.com.br"),
+    new Evento("EI",'Encoinfo',"2018-03-26","2018-04-25","2018-03-26","www.google.com.br"),
+    new Evento("EI",'Encoinfo',"2018-03-26","2018-04-25","2018-03-26","www.google.com.br"),
+    new Evento("EI",'Encoinfo',"2018-03-26","2018-04-25","2018-03-26","www.google.com.br") 
+  
   ];
-  tipos = [
-    new Tipo(0, 'indisciplina em sala de aula'),
-    new Tipo(1, 'comportamento inadequado com colegas'),
-    new Tipo(2, 'baixo índice de rendimento'),
-    new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social')
-  ];
-  alunos=[
-    new Aluno(1, 'Claison'),
-    new Aluno(2, 'jorge'),
-    new Aluno(3, 'César'),
-    new Aluno(4, 'Patricia'),
-    new Aluno(5, 'Laura'),
-  ]*/
-  tipos = this.carregarTipos();
-  alunos = this.carregarAlunos();
-  ocorrencias = this.carregarOcorrencias();
-
-  carregarOcorrencias(){
-    var ocorrencias = JSON.parse(localStorage.getItem("ocorrencias"));
-    if(ocorrencias == null){
-      ocorrencias = [ 
-        new Ocorrencia(1,'Claison',this.tipos[0],"2018-04-25"),
-        new Ocorrencia(2,'Heitor',this.tipos[1],"2018-03-26"),
-        new Ocorrencia(3,'Dyonnes',this.tipos[1],"2018-03-02"),
-        new Ocorrencia(4,'Patricia',this.tipos[2],"2018-04-09"),
-        new Ocorrencia(5,'Cesár',this.tipos[3],"2018-04-10"),
-        new Ocorrencia(6,'Jorge',this.tipos[2],"2018-03-27") 
-      ];
-      localStorage.setItem("ocorrencias",JSON.stringify(ocorrencias));
-    }
-    return ocorrencias;
-  }
-  carregarTipos(){
-    var tipos = JSON.parse(localStorage.getItem("tipos"));
-    if(tipos == null){
-      tipos = [
-        new Tipo(0, 'indisciplina em sala de aula'),
-        new Tipo(1, 'comportamento inadequado com colegas'),
-        new Tipo(2, 'baixo índice de rendimento'),
-        new Tipo(3, 'indicação de atenção por assunto familiar, psicológico ou social')
-      ];  
-      localStorage.setItem("tipos",JSON.stringify(tipos));
-    }
-    return tipos;
-  }
-
-  carregarAlunos(){
-    var alunos = JSON.parse(localStorage.getItem("alunos"));
-    if(alunos == null){
-      alunos = [
-        new Aluno(1, 'Claison'),
-        new Aluno(2, 'jorge'),
-        new Aluno(3, 'César'),
-        new Aluno(4, 'Patricia'),
-        new Aluno(5, 'Laura'),
-      ];  
-      localStorage.setItem("alunos",JSON.stringify(alunos));
-    }
-    return alunos;
-  }
-
-  exibir_lista(){
-    this.salvar_ok=false;
-    if(this.lista == true){
-      this.lista = false;
-    }
-    else{
-      this.lista = true;
-    }
-  }
-
+      
+  
   exibir_cadastro(){
     this.salvar_ok=false;
     if(this.cadastro == true){
@@ -125,78 +55,55 @@ export class AppComponent {
     }
   }
 
-  exibir_ocorrencia(){
+  exibir_evento(){
     this.salvar_ok=false;
-    if(this.cont_ocorrencia == true){
-      this.cont_ocorrencia = false;
+    if(this.lista_evento == true){
+      this.lista_evento = false;
     }
     else{
-      this.cont_ocorrencia = true;
+      this.lista_evento = true;
     }  
   }
   salvar() {
-    const a = new Aluno(this.matricula, this.nome,);
-    this.alunos.push(a);
-    const t= this.tipos[this.tipo];
-    const d = new Ocorrencia(this.matricula, this.nome,t, this.data,this.pais,this.nomePai, this.observacao,);
-    this.ocorrencias.push(d); 
-    localStorage.setItem("ocorrencias",JSON.stringify(this.ocorrencias));
-    this.salvar_ok=true;
-    this.limpar();
-    this.atualizarEstatisticas();
-    this.cadastro=false;    
+    if (this.editar) {
+      this.editar.sigla = this.sigla;
+      this.editar.nome = this.nome;
+      this.editar.dataI = this.dataI;
+      this.editar.dataF = this.dataF;
+      this.editar.prazo = this.prazo;
+      this.editar.url = this.url;
+      this.editar = null;
     }
-  limpar() {
-    
-    this.matricula=null;
+    else {
+    const d = new Evento(this.sigla, this.nome,this.dataI, this.dataF,this.prazo, this.url);
+    this.eventos.push(d); 
+    this.cancelar();   
+    }
+  }
+  cancelar() {
+    this.sigla=null;
     this.nome = null;
-    this.observacao = null;
-    this.nomePai=null;
-    this.data=null;
-    this.tipo=null;
-    this.pais=false;
     this.dataI=false;
     this.dataF=false;
+    this.prazo = null;
+    this.url=null;
+    }
+
+    editor(evento) {
+      this.sigla = evento.sigla;
+      this.nome = evento.nome;
+      this.dataI = evento.dataI;
+      this.dataF = evento.dataF;
+      this.prazo = evento.prazo;
+      this.url = evento.url;
+      this.editar = evento;
+    }
+    excluir(evento) {
+      if (confirm('Tem certeza que deseja excluir a disciplina "'
+          + evento.nome + '"?')) {
+        const i = this.eventos.indexOf(evento);
+        this.eventos.splice(i, 1);
+      }
+    }
     
-    }
-    atualizarEstatisticas() {
-      this.contadores = [0, 0, 0, 0];
-      this.cont_abril = 0;
-      this.cont_marco = 0;
-      for (var i = 0; i < this.ocorrencias.length; i++) {
-        this.contadores[this.ocorrencias[i].tipo.id]++;
-        if (this.ocorrencias[i].data.indexOf("-04-") != -1) {
-          this.cont_abril++;
-        }
-        if (this.ocorrencias[i].data.indexOf("-03-") != -1) {
-          this.cont_marco++;
-        }
-      }
-      if (this.cont_marco != 0) {
-        this.relacao_ocorrencias = (this.cont_abril - this.cont_marco)/this.cont_marco * 100;
-      }
-      for (var i = 0; i < 4; i++) {
-        this.porcentagens[i] = this.contadores[i] / this.ocorrencias.length * 100;
-      }
-    }
-    buscar(){
-      this.total_ocorrencia=null;
-      for (var i = 0; i < this.ocorrencias.length; i++) {
-        if(Date.parse(this.ocorrencias[i].data) >= Date.parse(this.dataI) && Date.parse(this.ocorrencias[i].data) <= Date.parse(this.dataF)){
-          this.total_ocorrencia++;
-        }
-      } 
-    }
-    buscaAluno() {
-      for (const aluno of this.alunos) {
-            if (aluno.matricula === this.matricula) {
-                this.nome = aluno.nome;
-                return;
-            }
-        }
-        alert('Aluno não encontrado!');
-        this.nome = null;
-        this.matricula = null;
-    }
-  
 }
